@@ -45,3 +45,4 @@ INSERT INTO [dbo].[Produtos] ([ProdutoId], [Nome], [Descricao], [Categoria], [Pr
 INSERT INTO [dbo].[Produtos] ([ProdutoId], [Nome], [Descricao], [Categoria], [Preco]) VALUES (45, N'Skate X7 Lungs', N'O Skate X7 Lungs é uma excelente opção para garantir seu maior conforto e, principalmente, dar maior qualidade em suas manobras com o melhor skate.', N'Skate', CAST(99.90 AS Decimal(16, 2)))
 INSERT INTO [dbo].[Produtos] ([ProdutoId], [Nome], [Descricao], [Categoria], [Preco]) VALUES (46, N'Skate Urgh Fish 2481', N'O Skate Urgh Fish 2481 é ideal para que você possa dar as manobras mais radicais com o melhor estilo e conforto, além da qualidade, já que ele conta com recursos como: shape de duas lâminas de bambu e três lâminas de pinho, base antiderrapante e roda em poliuretano. Adquira o seu ainda hoje!', N'Skate', CAST(496.90 AS Decimal(16, 2)))
 SET IDENTITY_INSERT [dbo].[Produtos] OFF
+
