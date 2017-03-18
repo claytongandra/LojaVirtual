@@ -1,0 +1,146 @@
+﻿@model Clayton.LojaVirtual.Dominio.Entidade.Pedido
+
+@{
+    ViewBag.Title = "Fechar o pedido";
+}
+
+<h3>Fechar o pedido</h3>
+
+<p>Digite suas informações abaixo</p>
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Pedido</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        
+        <h4>Enviar para</h4>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.NomeCliente, htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-9">
+                @Html.EditorFor(model => model.NomeCliente, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.NomeCliente, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <h4>Dados para entrega</h4>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Cep, htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-9">
+                @Html.EditorFor(model => model.Cep, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Cep, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Endereco, htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-9">
+                @Html.EditorFor(model => model.Endereco, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Endereco, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Complemento, htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-9">
+                @Html.EditorFor(model => model.Complemento, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Complemento, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Bairro, htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-9">
+                @Html.EditorFor(model => model.Bairro, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Bairro, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Cidade, htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-9">
+                @Html.EditorFor(model => model.Cidade, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Cidade, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Estado, htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-9">
+                @Html.EditorFor(model => model.Estado, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Estado, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-9">
+                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        @*<h4>Opções</h4>*@
+
+        <div class="form-group">
+            <div class="col-md-offset-3 col-md-7">
+                <div class="checkbox">
+                    <label>
+                        @Html.EditorFor(model => model.EmbrulhaPresente) Embrulhar para presente
+                    </label>
+                    @Html.ValidationMessageFor(model => model.EmbrulhaPresente, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-3 col-md-9">
+                <input type="submit" value="Fechar o pedido" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+    
+    <hr />
+    @*foreach (var property in ViewData.ModelMetadata.Properties)
+    {
+        
+        <div class="form-group">
+            <label>
+                @(property.DisplayName ?? property.PropertyName)
+            </label>
+        </div>
+    }*@
+}
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+
+<script>
+
+    $(document).ready(function () {
+        $("#Cep").change(function (e) {
+            e.preventDefault();
+
+            var vjsCep = $("#Cep").val().replace('-', '');
+
+            $("#Endereco").val('');
+            $("#Bairro").val('');
+            $("#Cidade").val('');
+            $("#Estado").val('');
+
+            $.getJSON("http://cep.republicavirtual.com.br/web_cep.php?cep=" + vjsCep + "&formato=json", {}, function (data) {
+                if (data.resultado_txt == "sucesso - cep completo")
+                {
+                    $("#Endereco").val(data.tipo_logradouro+  ' ' + data.logradouro);
+                    $("#Bairro").val(data.bairro);
+                    $("#Cidade").val(data.cidade);
+                    $("#Estado").val(data.uf);
+                }
+            });
+        });
+    });
+</script>

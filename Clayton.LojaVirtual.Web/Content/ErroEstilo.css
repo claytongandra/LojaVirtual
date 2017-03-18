@@ -1,0 +1,12 @@
+﻿.input-validation-error{
+    border:1px solid #f00;
+    background:#fee;
+}
+
+.field-validation-error{
+
+}
+
+.validation-summary-errors{
+    font-weight:bold;
+}
