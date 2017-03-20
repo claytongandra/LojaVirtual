@@ -5,9 +5,12 @@
     Layout = "~/Areas/Administrativo/Views/Shared/_AdministrativoLayout.cshtml";
 }
 
-<div class="alert alert-success" id="mensagem"></div>
+@*<div class="alert alert-success" id="mensagem"></div>*@
 
-<h2>Produtos</h2>
+<section id="section-mensagem"></section>
+
+
+<h3>Produtos</h3>
 
 <p>
     @Html.ActionLink("Novo Produto", "NovoProduto", null, new { @class = "btn btn-default" })
@@ -33,7 +36,7 @@
     {
         <tr id="row-@item.ProdutoId">
             <td class="text-right">
-                @Html.DisplayFor(modelItem => item.ProdutoId)
+                #  @item.ProdutoId
             </td>
             <td>
 
@@ -46,13 +49,21 @@
                 @Html.DisplayFor(modelItem => item.Categoria)
             </td>
             <td class="text-center">
-                @using(Html.BeginForm("Excluir","Produto"))
+                @*@using(Html.BeginForm("Excluir","Produto"))
                 {
-                    @Html.HiddenFor(modelItem => item.ProdutoId)
+                    @Html.AntiForgeryToken()
+                    @Html.Hidden("produtoId", item.ProdutoId)
                     <input type="submit" value="Excluir" class="btn btn-default btn-xs" />
-                }
+                }*@
+
+                <input type="submit" value="Excluir" class="btn btn-default btn-xs btn-excluir-produto" id="@item.ProdutoId" name="@item.Nome" />
             </td>
         </tr>
     }
 
 </table>
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+
+@Html.Partial("Confirmacao")
+

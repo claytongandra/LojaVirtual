@@ -28,7 +28,66 @@ namespace Clayton.LojaVirtual.Web.Areas.Administrativo.Controllers
             Produto produto = _repositorio.Produtos
                .FirstOrDefault(p => p.ProdutoId == produtoId);
 
+            ViewBag.NomeProduto = produto.Nome;
+
             return View(produto);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Alterar(Produto produto, string hidNomeProduto)
+        {
+
+            if (ModelState.IsValid)
+            {
+                _repositorio = new ProdutosRepositorio();
+                _repositorio.Salvar(produto);
+
+                TempData["mensagem"] = string.Format("{0} foi salvo com sucesso", produto.Nome);
+
+                return RedirectToAction("Index");
+            }
+
+            ViewBag.NomeProduto = hidNomeProduto;
+
+            return View(produto);
+        }
+
+        public ViewResult NovoProduto()
+        {
+
+            return View("Alterar", new Produto());
+        }
+
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Excluir(int produtoId)
+        //{
+        //    _repositorio = new ProdutosRepositorio();
+
+        //    Produto prod = _repositorio.Excluir(produtoId);
+
+        //    if (prod != null)
+        //    {
+        //        TempData["mensagem"] = string.Format("{0} excluído com sucesso", prod.Nome);
+        //    }
+        //    return RedirectToAction("Index");
+        //}
+
+
+        public JsonResult Excluir(int produtoId)
+        {
+            string mensagem = string.Empty;
+            _repositorio = new ProdutosRepositorio();
+
+            Produto prod = _repositorio.Excluir(produtoId);
+
+            if (prod != null)
+            {
+                mensagem = string.Format("{0} excluído com sucesso", prod.Nome);
+            }
+            return Json(mensagem, JsonRequestBehavior.AllowGet);
         }
     }
 }
+

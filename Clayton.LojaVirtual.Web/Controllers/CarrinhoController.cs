@@ -79,6 +79,7 @@ namespace Clayton.LojaVirtual.Web.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ViewResult FecharPedido(Pedido pedido)
         {
             Carrinho carrinho = ObterCarrinho();
