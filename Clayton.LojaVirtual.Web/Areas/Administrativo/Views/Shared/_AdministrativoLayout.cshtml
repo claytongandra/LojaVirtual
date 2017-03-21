@@ -24,6 +24,8 @@
                 @Html.ActionLink("Clayton Loja Virtual - Administrativo", "Index", "Produto", new { area = "Administrativo" }, new { @class = "navbar-brand" })
 
             </div>
+
+            @Html.Partial("~/Areas/Administrativo/Views/Shared/_LoginPartial.cshtml")
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav"></ul>
             </div>
@@ -34,7 +36,7 @@
         <div id="" class="col-sm-12">
             @if(TempData["mensagem"] != null)
             {
-                <div id="mensagem" class="alert alert-success">@TempData["mensagem"]
+                <div id="mensagem" class="alert alert-success">@Html.Raw(TempData["mensagem"])
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>

@@ -24,11 +24,15 @@
                 @Html.ActionLink("Clayton Loja Virtual", "ListaProdutos", "Vitrine", new { area = "" }, new { @class = "navbar-brand" })
                
             </div>
+            
+            @Html.Partial("_LoginPartial")
             @Html.Action("Resumo", "Carrinho")
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                 </ul>
             </div>
+
+           
         </div>
     </div>
     

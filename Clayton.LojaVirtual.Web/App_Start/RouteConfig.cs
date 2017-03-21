@@ -27,8 +27,9 @@ namespace Clayton.LojaVirtual.Web
             //4
             routes.MapRoute(null, "{categoria}/Pagina{pagina}", new { controller = "Vitrine", action = "ListaProdutos" }, new { pagina = @"\d+" });
 
-            routes.MapRoute(null, "{controller}/{action}");
+            routes.MapRoute("ObterImagem", "Vitrine/ObterImagem/{ProdutoId}", new { controller = "Vitrine", action = "ObterImagem", produtoId = UrlParameter.Optional });
 
+            routes.MapRoute(null, "{controller}/{action}");
         }
     }
 }

@@ -2,10 +2,12 @@
 using System.Linq;
 using Clayton.LojaVirtual.Dominio.Repositorio;
 using Clayton.LojaVirtual.Dominio.Entidade;
+using System.Web;
 
 
 namespace Clayton.LojaVirtual.Web.Areas.Administrativo.Controllers
 {
+    [Authorize]
     public class ProdutoController : Controller
     {
       
@@ -35,15 +37,22 @@ namespace Clayton.LojaVirtual.Web.Areas.Administrativo.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Alterar(Produto produto, string hidNomeProduto)
+        public ActionResult Alterar(Produto produto, string hidNomeProduto, HttpPostedFileBase image = null)
         {
 
             if (ModelState.IsValid)
             {
+                if (image != null)
+                {
+                    produto.ImagemMimeType = image.ContentType;
+                    produto.Imagem = new byte[image.ContentLength];
+                    image.InputStream.Read(produto.Imagem, 0, image.ContentLength);
+                }
+
                 _repositorio = new ProdutosRepositorio();
                 _repositorio.Salvar(produto);
 
-                TempData["mensagem"] = string.Format("{0} foi salvo com sucesso", produto.Nome);
+                TempData["mensagem"] = string.Format("<a href='Administrativo/Produto/Alterar?ProdutoId={0}'> {1} foi salvo com sucesso </a>", produto.ProdutoId, produto.Nome);
 
                 return RedirectToAction("Index");
             }

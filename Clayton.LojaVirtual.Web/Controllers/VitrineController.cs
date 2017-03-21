@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Web.Mvc;
 using Clayton.LojaVirtual.Dominio.Repositorio;
+using Clayton.LojaVirtual.Dominio.Entidade;
 using Clayton.LojaVirtual.Web.Models;
 
 namespace Clayton.LojaVirtual.Web.Controllers
@@ -34,6 +35,21 @@ namespace Clayton.LojaVirtual.Web.Controllers
             };
 
             return View(model);
+        }
+
+        public FileContentResult ObterImagem(int produtoId)
+        {
+            _repositorio = new ProdutosRepositorio();
+
+            Produto produto = _repositorio.Produtos
+               .FirstOrDefault(p => p.ProdutoId == produtoId);
+
+            if (produto != null)
+            {
+                return File(produto.Imagem, produto.ImagemMimeType);
+            }
+
+            return null;
         }
     }
 }
