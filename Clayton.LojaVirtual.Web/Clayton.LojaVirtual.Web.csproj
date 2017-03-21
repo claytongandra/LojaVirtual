@@ -95,6 +95,7 @@
     <Content Include="Content\ErroEstilo.css" />
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
+    <Content Include="Content\Imagens\sem-magem.png" />
     <Content Include="Content\Site.css" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -145,6 +146,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="HtmlHelpers\PaginacaoHelpers.cs" />
+    <Compile Include="Infraestrutura\CarrinhoModelBinder.cs" />
     <Compile Include="Models\CarrinhoViewModel.cs" />
     <Compile Include="Models\Paginacao.cs" />
     <Compile Include="Models\ProdutosViewModel.cs" />

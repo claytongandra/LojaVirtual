@@ -19,7 +19,6 @@ namespace Clayton.LojaVirtual.Web.Controllers
 
             ProdutosViewModel model = new ProdutosViewModel 
             {
-               
                 Produtos = _repositorio.Produtos
                 .Where(p => categoria == null || p.Categoria == categoria)
                             .OrderBy(p => p.Descricao)

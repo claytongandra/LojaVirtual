@@ -75,7 +75,9 @@ namespace Clayton.LojaVirtual.Web.Controllers
         public ActionResult LogOff()
         {
             //AuthenticationManager.SignOut();
-            return RedirectToAction("Index", "Home");
+
+            FormsAuthentication.SignOut();
+            return RedirectToAction("ListaProdutos", "Vitrine");
         }
     }
 }

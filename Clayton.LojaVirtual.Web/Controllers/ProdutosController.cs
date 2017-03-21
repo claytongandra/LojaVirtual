@@ -6,8 +6,8 @@ namespace Clayton.LojaVirtual.Web.Controllers
 {
     public class ProdutosController : Controller
     {
-
         private ProdutosRepositorio _repositorio;
+
         // GET: Produtos
         public ActionResult Index()
         {

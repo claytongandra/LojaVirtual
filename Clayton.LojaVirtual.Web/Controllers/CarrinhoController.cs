@@ -12,78 +12,34 @@ namespace Clayton.LojaVirtual.Web.Controllers
     {
         private ProdutosRepositorio _repositorio;
 
-        public ViewResult Index(string returnUrl)
+        // GET: Index
+        public ViewResult Index(Carrinho carrinho, string returnUrl)
         {
                       
             return View(new CarrinhoViewModel
             {
-                Carrinho = ObterCarrinho(),
+                Carrinho = carrinho,
                 ReturnUrl = returnUrl
             });
         }
-        
-        // GET: Carrinho
-        public RedirectToRouteResult Adicionar(int produtoId, string returnUrl)
+
+        // GET: Resumo
+        public PartialViewResult Resumo(Carrinho carrinho)
         {
-            _repositorio = new ProdutosRepositorio();
-
-            Produto produto = _repositorio.Produtos
-                .FirstOrDefault(p => p.ProdutoId == produtoId);
-
-            if(produto != null)
-            {
-                ObterCarrinho().AdicionarItem(produto, 1);
-               
-            }
-
-            return RedirectToAction("Index", new { returnUrl });
-        }
-
-        private Carrinho ObterCarrinho()
-        {
-            Carrinho carrinho = (Carrinho)Session["Carrinho"];
-
-            if(carrinho == null)
-            {
-                carrinho = new Carrinho();
-                Session["Carrinho"] = carrinho;
-            }
-            return carrinho;
-        }
-
-        public RedirectToRouteResult Remover(int produtoId, string returnUrl)
-        {
-             _repositorio = new ProdutosRepositorio();
-
-            Produto produto = _repositorio.Produtos
-                .FirstOrDefault(p => p.ProdutoId == produtoId);
-
-            if (produto != null)
-            {
-                ObterCarrinho().RemoverItem(produto);
-            }
-
-            return RedirectToAction("Index", new { returnUrl });
-        }
-
-        public PartialViewResult Resumo()
-        {
-            Carrinho carrinho = ObterCarrinho();
-
             return PartialView(carrinho);
         }
 
+        // GET: FecharPedido
         public ViewResult FecharPedido()
         {
             return View(new Pedido());
         }
 
+        // Post: FecharPedido
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ViewResult FecharPedido(Pedido pedido)
+        public ViewResult FecharPedido(Carrinho carrinho, Pedido pedido)
         {
-            Carrinho carrinho = ObterCarrinho();
-
             EmailConfiguracoes email = new EmailConfiguracoes
             {
                 EscreverArquivo = bool.Parse(ConfigurationManager.AppSettings["Email.EscreverArquivo"] ?? "false")
@@ -91,7 +47,7 @@ namespace Clayton.LojaVirtual.Web.Controllers
 
             EmailPedido emailPedido = new EmailPedido(email);
 
-            if(!carrinho.ItensCarrinho.Any())
+            if (!carrinho.ItensCarrinho.Any())
             {
                 ModelState.AddModelError("", "Não foi possível concluir o pedido, seu carrinho está vazio!");
             }
@@ -106,12 +62,58 @@ namespace Clayton.LojaVirtual.Web.Controllers
             {
                 return View(pedido);
             }
-            
+
         }
 
+        // GET: Adicionar
+        public RedirectToRouteResult Adicionar(Carrinho carrinho, int produtoId, string returnUrl)
+        {
+            _repositorio = new ProdutosRepositorio();
+
+            Produto produto = _repositorio.Produtos
+                .FirstOrDefault(p => p.ProdutoId == produtoId);
+
+            if(produto != null)
+            {
+                carrinho.AdicionarItem(produto, 1);
+               
+            }
+
+            return RedirectToAction("Index", new { returnUrl });
+        }
+
+        // GET: Remover
+        public RedirectToRouteResult Remover(Carrinho carrinho, int produtoId, string returnUrl)
+        {
+             _repositorio = new ProdutosRepositorio();
+
+            Produto produto = _repositorio.Produtos
+                .FirstOrDefault(p => p.ProdutoId == produtoId);
+
+            if (produto != null)
+            {
+                carrinho.RemoverItem(produto);
+            }
+
+            return RedirectToAction("Index", new { returnUrl });
+        }
+
+        // GET: PedidoConcluido
         public ViewResult PedidoConcluido()
         {
             return View();
         }
+
+        //private Carrinho ObterCarrinho()
+        //{
+        //    Carrinho carrinho = (Carrinho)Session["Carrinho"];
+
+        //    if (carrinho == null)
+        //    {
+        //        carrinho = new Carrinho();
+        //        Session["Carrinho"] = carrinho;
+        //    }
+        //    return carrinho;
+        //}
     }
 }

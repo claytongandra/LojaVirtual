@@ -4,7 +4,6 @@ using Clayton.LojaVirtual.Dominio.Repositorio;
 using Clayton.LojaVirtual.Dominio.Entidade;
 using System.Web;
 
-
 namespace Clayton.LojaVirtual.Web.Areas.Administrativo.Controllers
 {
     [Authorize]
@@ -42,14 +41,27 @@ namespace Clayton.LojaVirtual.Web.Areas.Administrativo.Controllers
 
             if (ModelState.IsValid)
             {
+
+                _repositorio = new ProdutosRepositorio();
+
                 if (image != null)
                 {
                     produto.ImagemMimeType = image.ContentType;
                     produto.Imagem = new byte[image.ContentLength];
                     image.InputStream.Read(produto.Imagem, 0, image.ContentLength);
                 }
+                else
+                {
+                    Produto prod = _repositorio.Produtos
+                        .FirstOrDefault(p => p.ProdutoId == produto.ProdutoId);
 
-                _repositorio = new ProdutosRepositorio();
+                    if (prod.Imagem != null)
+                    {
+                        produto.ImagemMimeType = prod.ImagemMimeType;
+                        produto.Imagem = prod.Imagem;
+                    }
+                }
+                
                 _repositorio.Salvar(produto);
 
                 TempData["mensagem"] = string.Format("<a href='Administrativo/Produto/Alterar?ProdutoId={0}'> {1} foi salvo com sucesso </a>", produto.ProdutoId, produto.Nome);

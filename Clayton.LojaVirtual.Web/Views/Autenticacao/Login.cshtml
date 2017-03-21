@@ -10,7 +10,7 @@
             <div class="col-sm-6 col-md-4 col-md-offset-4">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <strong>Efetue o login para continuar</strong>
+                        <strong>Administrador</strong>
                     </div>
                     <div class="panel-body">
                         @using (Html.BeginForm("Login", "Autenticacao", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new{@class = "form-signin"}))
@@ -18,7 +18,12 @@
                             @Html.AntiForgeryToken()
                             <fieldset>
                                 <div class="row">
-                                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                    <div class="col-sm-12 col-md-10  col-md-offset-1 ">
+                                        <h6><strong> Efetue o login de administrador para continuar</strong></h6>
+                                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                    </div>
+                                    
+                                    
                                     @*<div class="center-block">
                                         <img class="profile-img" src="//lh3.googleusercontent.com/-xp4g_BouZJc/AAAAAAAAAAI/AAAAAAAAAAA/AAomvV0eVfilV_Gaj4ZDBk-4v0h_4mY4Lg/mo/photo.jpg?sz=46" alt="">
                                     </div>*@
@@ -54,7 +59,7 @@
                         }
                     </div>
                     <div class="panel-footer ">
-                        Não é um administrador! <a href="@Url.Action("Index", "Produtos", new { Area = "" })" onclick=""> Voltar para Loja Virtual</a>
+                        Não é um administrador! <a href="@Url.Action("ListaProdutos", "Vitrine", new { Area = "" })" onclick=""> Voltar para Loja Virtual</a>
                     </div>
                 </div>
             </div>
