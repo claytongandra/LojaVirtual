@@ -21,89 +21,92 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-<script>
-    $(document).ready(function () {
-        //Abrir Modal
+@section Scripts {
+   <script>
+       $(document).ready(function () {
+           //Abrir Modal
 
-        $(".btn-excluir-produto").click(function (e) {
-            e.preventDefault();
-            var vjsId = this.id;
-            var vjsProdutoNome = this.name;
-            //alert("#" + vjsId + " " + vjsProdutoNome);
+           $(".btn-excluir-produto").click(function (e) {
+               e.preventDefault();
+               var vjsId = this.id;
+               var vjsProdutoNome = this.name;
+               //alert("#" + vjsId + " " + vjsProdutoNome);
 
-            $("#deleteModal .modal-body input[type=hidden]").val(vjsId);
-            $("#deleteModal .modal-body span").text(vjsProdutoNome);
-            $("#deleteModal").modal("show");
-        });
+               $("#deleteModal .modal-body input[type=hidden]").val(vjsId);
+               $("#deleteModal .modal-body span").text(vjsProdutoNome);
+               $("#deleteModal").modal("show");
+           });
 
-        $("#btnConfirmarExcluirProduto").click(function (e) {
-            e.preventDefault();
+           $("#btnConfirmarExcluirProduto").click(function (e) {
+               e.preventDefault();
 
-            var vjsUrl = "Administrativo/Produto/Excluir";
-            var vjsId = $(".modal-body input[type=hidden]").val();
-            var vjsRow = "#row-" + vjsId;
-            
-            $.ajax({
-                type: "Post",
-                url: vjsUrl,
-                contentType: 'application/x-www-form-urlencoded;',
-                dataType: "json",
-                cache: false,
-                global: true,
-                data: { "produtoId": vjsId },
-                beforeSend: function () {
-                    console.log("beforeSend");
-                    $("#deleteModal .modal-body").append("<div id='alertLoading' class='alert alert-info' role='alert'><i class='fa fa-spinner fa-pulse'></i> <span class='text_carregando'>Carregando...</span></div>");
-                    $("#section-mensagem").empty();
-                    $("#section-mensagem").append("<div id='divexcluir'><div>");
-                },
-                success: function (data) {
-                    //console.log("success");
-                    //alert("success");
-                    $("#deleteModal").modal("hide");
-                    $("#divexcluir").addClass("alert alert-success");
-                              
-                    $(vjsRow).css({ "background-color": "#fcf8e3", "border-color": "#faebcc" }).animate({ opacity: 0.0 }, 500, function () {
-                        $(vjsRow).remove();
-                    });
-                },
-                error: function (xhr, errorMessage, thrownError) {
-                    //console.log("error");
-                    $("#deleteModal").modal("hide");
-                 
-                    $("#divexcluir").addClass("alert alert-danger");
-                    $("#divexcluir").html("<div id='alertLoading' class='alert alert-danger' role='alert'><ul id='erro_post'><li>Ocorreu um erro ao carregar as informações.</li><li>Erro: " + xhr.status + "</li><li>Descrição: " + xhr.statusText + "</li><li>Erro Response Text:" + xhr.responseText + "</li><li>Caso o problema persista, contate o administrador do sistema.</li></ul></div>");
-                   // $("#divexcluir").append("<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>");
-                },
-                complete: function (data) {
-                    //console.log("complete");
-                    $("#deleteModal #alertLoading").remove();
-                    
-                    $("#divexcluir").empty();
-                    $("#divexcluir").html("<span id='spanexcluirmsg'>" + data.responseText + "</span>")
-                    $("#divexcluir #spanexcluirmsg").before("<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>");
-                    //  $("#divexcluir").show();
-                }
-            });
+               var vjsUrl = "Administrativo/Produto/Excluir";
+               var vjsId = $(".modal-body input[type=hidden]").val();
+               var vjsRow = "#row-" + vjsId;
 
-            //alert("btnConfirmarExcluirProduto");
-            //alert("#" + vjsId + " " + vjsUrl);
-            //alert(vjsRow); 
-        });
+               $.ajax({
+                   type: "Post",
+                   url: vjsUrl,
+                   contentType: 'application/x-www-form-urlencoded;',
+                   dataType: "json",
+                   cache: false,
+                   global: true,
+                   data: { "produtoId": vjsId },
+                   beforeSend: function () {
+                       console.log("beforeSend");
+                       $("#deleteModal .modal-body").append("<div id='alertLoading' class='alert alert-info' role='alert'><i class='fa fa-spinner fa-pulse'></i> <span class='text_carregando'>Carregando...</span></div>");
+                       $("#section-mensagem").empty();
+                       $("#section-mensagem").append("<div id='divexcluir'><div>");
+                   },
+                   success: function (data) {
+                       //console.log("success");
+                       //alert("success");
+                       $("#deleteModal").modal("hide");
+                       $("#divexcluir").addClass("alert alert-success");
 
-        $('#deleteModal').on('hide.bs.modal', function () {
-            //alert("hide.bs.modal");
-        }).on('hidden.bs.modal', function () {
-            //alert("hidden.bs.modal");
-            $("#deleteModal #alertLoading").remove();
-        }).on('show.bs.modal', function () {
-            //alert("shown.bs.modal");
-            $(".alert").hide();
-        }).on('shown.bs.modal', function () {
-            //alert("shown.bs.modal");
-        }).on('close.bs.alert', function () {
-           // alert("close.bs.alert");
-        })
-    });
+                       $(vjsRow).css({ "background-color": "#fcf8e3", "border-color": "#faebcc" }).animate({ opacity: 0.0 }, 500, function () {
+                           $(vjsRow).remove();
+                       });
+                   },
+                   error: function (xhr, errorMessage, thrownError) {
+                       //console.log("error");
+                       $("#deleteModal").modal("hide");
+
+                       $("#divexcluir").addClass("alert alert-danger");
+                       $("#divexcluir").html("<div id='alertLoading' class='alert alert-danger' role='alert'><ul id='erro_post'><li>Ocorreu um erro ao carregar as informações.</li><li>Erro: " + xhr.status + "</li><li>Descrição: " + xhr.statusText + "</li><li>Erro Response Text:" + xhr.responseText + "</li><li>Caso o problema persista, contate o administrador do sistema.</li></ul></div>");
+                       // $("#divexcluir").append("<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>");
+                   },
+                   complete: function (data) {
+                       //console.log("complete");
+                       $("#deleteModal #alertLoading").remove();
+
+                       $("#divexcluir").empty();
+                       $("#divexcluir").html("<span id='spanexcluirmsg'>" + data.responseText + "</span>")
+                       $("#divexcluir #spanexcluirmsg").before("<button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>");
+                       //  $("#divexcluir").show();
+                   }
+               });
+
+               //alert("btnConfirmarExcluirProduto");
+               //alert("#" + vjsId + " " + vjsUrl);
+               //alert(vjsRow);
+           });
+
+           $('#deleteModal').on('hide.bs.modal', function () {
+               //alert("hide.bs.modal");
+           }).on('hidden.bs.modal', function () {
+               //alert("hidden.bs.modal");
+               $("#deleteModal #alertLoading").remove();
+           }).on('show.bs.modal', function () {
+               //alert("shown.bs.modal");
+               $(".alert").hide();
+           }).on('shown.bs.modal', function () {
+               //alert("shown.bs.modal");
+           }).on('close.bs.alert', function () {
+               // alert("close.bs.alert");
+           })
+       });
 </script>
+}
+
 

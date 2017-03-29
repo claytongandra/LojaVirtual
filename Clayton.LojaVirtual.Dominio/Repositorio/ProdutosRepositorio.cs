@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Clayton.LojaVirtual.Dominio.Entidade;
 
 namespace Clayton.LojaVirtual.Dominio.Repositorio
@@ -10,6 +11,12 @@ namespace Clayton.LojaVirtual.Dominio.Repositorio
         public IEnumerable<Produto> Produtos
         {
             get { return _context.Produtos; }
+        }
+
+        //ObterProduto
+        public Produto ObterProduto(int id)
+        {
+            return _context.Produtos.Single(p => p.ProdutoId == id);
         }
 
         //Salvar Produto - Alterar Produto

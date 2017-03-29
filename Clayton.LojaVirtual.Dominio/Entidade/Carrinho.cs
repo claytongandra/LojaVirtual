@@ -7,47 +7,57 @@ namespace Clayton.LojaVirtual.Dominio.Entidade
     {
         private readonly List<ItemCarrinho> _itensCarrinho = new List<ItemCarrinho>();
         //Adicionar
-        public void AdicionarItem(Produto produto, int quantidade)
+        public void AdicionarItem(Produto produto)
         {
             ItemCarrinho item = _itensCarrinho.FirstOrDefault(p => p.Produto.ProdutoId == produto.ProdutoId);
 
-            if(item == null)
+            if (item == null)
             {
                 _itensCarrinho.Add(new ItemCarrinho
                 {
                     Produto = produto,
-                    Quantidade = quantidade
+                    Quantidade = 1
                 });
             }
             else
             {
-                item.Quantidade += quantidade;
+                item.Quantidade += 1;
             }
         }
 
         //Remover
-        public void RemoverItem(Produto produto)
+        public void RemoverItem(Produto produto, int quantidade)
         {
-            _itensCarrinho.RemoveAll(l => l.Produto.ProdutoId == produto.ProdutoId);
+            if (quantidade >= 1)
+            {
+                ItemCarrinho item = _itensCarrinho.FirstOrDefault(p => p.Produto.ProdutoId == produto.ProdutoId);
+
+                item.Quantidade = quantidade;
+            }
+            else
+            {
+                _itensCarrinho.RemoveAll(l => l.Produto.ProdutoId == produto.ProdutoId);
+            }
+
         }
 
         //Obter valor total
-         public decimal ObterValorTotal()
+        public decimal ObterValorTotal()
         {
             return _itensCarrinho.Sum(e => e.Produto.Preco * e.Quantidade);
         }
 
         //Limpar carrinho
-         public void LimparCarrinho()
-         {
-             _itensCarrinho.Clear();
-         }
+        public void LimparCarrinho()
+        {
+            _itensCarrinho.Clear();
+        }
 
         //Iten carrinho
-         public IEnumerable<ItemCarrinho> ItensCarrinho
-         {
-             get { return _itensCarrinho; }
-         }
+        public IEnumerable<ItemCarrinho> ItensCarrinho
+        {
+            get { return _itensCarrinho; }
+        }
     }
 
     public class ItemCarrinho

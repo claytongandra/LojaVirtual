@@ -1,5 +1,6 @@
 ﻿@model Clayton.LojaVirtual.Dominio.Entidade.Produto
 @using System.Text.RegularExpressions;
+@using Clayton.LojaVirtual.Web.HtmlHelpers;
 
 <div class="well">
     <div class="row">
@@ -16,28 +17,29 @@
         <div class="col-md-9">
             <div class="row">
                 <div class="col-md-9">
-                    <h4 class="pull-left" style="margin:0 0 10px 0; width:100%;"><strong>@Model.Nome</strong></h4>
+                    <h4 class="pull-left" style="margin:0 0 10px 0; width:100%;"><strong>@Html.ActionLink(@Model.Nome, "Detalhes", "Vitrine", new { @id = @Model.ProdutoId, produto =@Model.Nome.ToSeoUrl() }, new {@class = "deco-none" })</strong></h4>
                     <h3 class="pull-left" style="margin:0 0 10px 0;"><span class="label label-primary">@Model.Preco.ToString("c")</span></h3>
                 </div>
-                <div class="col-md-3">
+                @*<div class="col-md-3">
 
                     @using (Html.BeginForm("Adicionar", "Carrinho"))
-                    {
-                        <div>
-                            @Html.HiddenFor(x => x.ProdutoId)
-                            @Html.Hidden("returnUrl", Request.Url.PathAndQuery)
+                     {
+                         <div>
+                             @Html.HiddenFor(x => x.ProdutoId)
+                             @* @Html.Hidden("Quantidade", 1)* @
+                             @Html.Hidden("returnUrl", Request.Url.PathAndQuery)
 
-                            <button class="btn btn-success btn-block" type="submit">
-                                <i class="fa fa-shopping-cart">&nbsp;</i>Comprar
-                            </button>
-                        </div>
-                    }
-                </div>
+                             <button class="btn btn-success btn-block" type="submit">
+                                 <i class="fa fa-shopping-cart">&nbsp;</i>Comprar
+                             </button>
+                         </div>
+                     }
+                </div>*@
             </div>
             <div class="row">
-                <div class="col-md-12">
+                @*<div class="col-md-12">
                     <p class="text-justify">@Html.Raw(Regex.Replace(Model.Descricao, @"\r\n?|\n", "<br />"))</p>
-                </div>
+                </div>*@
             </div>
         </div>
     </div>

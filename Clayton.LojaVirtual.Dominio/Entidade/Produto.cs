@@ -22,7 +22,7 @@ namespace Clayton.LojaVirtual.Dominio.Entidade
         [Display(Name = "Preço:")]
         public decimal Preco { get; set; }
 
-        [Required(ErrorMessage = "Informe a categotia do produto")]
+        [Required(ErrorMessage = "Informe a categoria do produto")]
         [Display(Name = "Categoria:")]
         public string Categoria { get; set; }
 

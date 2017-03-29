@@ -8,16 +8,16 @@
     <ul id="top-menu" class="nav navbar-nav navbar-right">
         <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href='#' id="userLink">
-                <i class="fa fa-user">&nbsp;</i>Olá @User.Identity.Name <i class="fa fa-angle-down"></i>
+                <i class="fa fa-user">&nbsp;</i>Olá @User.Identity.Name &nbsp;<i class="fa fa-angle-down"></i>
             </a>
             <ul class="dropdown-menu dropdown-user">
-                <li>
+                @*<li>
                     <div class="user-menu">
-                        @*<a href="#" id="userAvatarMenu" data-toggle="modal" data-target="#modalBootstrap" data-whatever=""><img data-tooltip="true" data-placement="right" title="Alterar imagem de perfil" id="imagemAvatar" class="img-circle" src="@* @_caminhoAvatar* @" width="45" height="45" /></a>*@
+                        @*<a href="#" id="userAvatarMenu" data-toggle="modal" data-target="#modalBootstrap" data-whatever=""><img data-tooltip="true" data-placement="right" title="Alterar imagem de perfil" id="imagemAvatar" class="img-circle" src="@* @_caminhoAvatar* @" width="45" height="45" /></a>* @
                         <span class="user-position">Entrou como:</span>
                         <span class="user-name">@User.Identity.Name</span>
                     </div>
-                </li>
+                </li>*@
                 @*<li class="divider"></li>
                 <li>
                     <a href="@Url.Action("Index", "Manage", new { Area = "" })">
@@ -29,7 +29,7 @@
                             <i class="fa fa-cogs">&nbsp;&nbsp;</i>Alterar Senha
                         </a>
                     </li>*@
-                <li class="divider"></li>
+                @*<li class="divider"></li>*@
                 <li>
                     <a href="javascript:document.getElementById('logoutForm').submit()">
                         <i class="fa fa-sign-out">&nbsp;&nbsp;</i>Sair

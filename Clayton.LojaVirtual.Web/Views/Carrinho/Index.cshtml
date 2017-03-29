@@ -10,48 +10,91 @@
 
 <h2>Seu Carrinho</h2>
 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-<table id="carrinhoTable" class="table">
-    <thead>
-        <tr>
-            <th>Quantidade</th>
-            <th>Produto</th>
-            <th class="text-right">Preço</th>
-            <th class="text-right">Subtotal</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.Carrinho.ItensCarrinho)
-        {
+
+@if (Model.Carrinho.ItensCarrinho.Count() <= 0)
+{
+    <div id="mensagem" class="alert alert-warning">
+        O carrinho está vazio!
+        @*<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>*@
+    </div>
+    @*<div class="row">
+        <div class="col-md-12 cn">
+            <div class="inner">
+                <img src="~/Content/Imagens/shopcartexclude.png" />
+            </div>
+        </div>
+    </div>*@
+        
+ 
+}
+else
+{
+    <table id="carrinhoTable" class="table">
+        <thead>
             <tr>
-                <td class="text-center">@item.Quantidade</td>
-                <td>@item.Produto.Nome</td>
-                <td class="text-right">@item.Produto.Preco.ToString("c")</td>
-                <td class="text-right">@((item.Quantidade * item.Produto.Preco).ToString("c"))</td>
-                <td>
-                    @using (Html.BeginForm("Remover", "Carrinho")) { 
-                        @Html.Hidden("ProdutoId",item.Produto.ProdutoId)
-                        @Html.HiddenFor(x => x.ReturnUrl)
-                        <input class="btn btn-sm btn-warning" type="submit" value="Remover" />
-                    }
-                </td>
+                @*<th>Quantidade</th>*@
+                <th>Produto</th>
+                <th class="text-right">Preço</th>
+                <th class="text-right">Subtotal</th>
+                <th class="text-center">Quantidade</th>
+                <th></th>
             </tr>
-        }
-    </tbody>
-    <tfoot>
-        <tr>
-            <td colspan="3" class="text-right">Total:</td>
-            <td class="text-right">@Model.Carrinho.ObterValorTotal().ToString("c")</td>
-        </tr>
-    </tfoot>
-</table>
+        </thead>
+        <tbody>
 
-<div class="text-center">
+            @foreach (var item in Model.Carrinho.ItensCarrinho)
+            {
+                <tr>
+                    @*<td class="text-center">@item.Quantidade</td>*@
+                    <td>@item.Produto.Nome</td>
+                    <td class="text-right">@item.Produto.Preco.ToString("c")</td>
+                    <td class="text-right">@((item.Quantidade * item.Produto.Preco).ToString("c"))</td>
+                    <td class="text-center">
+                        <div class="input-group">
+                            <span class="input-group-btn">
+                                <button type="button" class="quantity-left-minus btn btn-default btn-number btn-sm" data-type="minus" data-field="@item.Produto.ProdutoId">
+                                    <span class="fa fa-minus"></span>
+                                </button>
+                            </span>
+                            <input type="hidden" id="quantidade-@item.Produto.ProdutoId" name="Quantidade" class="form-control input-number textbox-quantidade" value="@item.Quantidade" min="1" max="100">
+                            <span id="quantidade-@item.Produto.ProdutoId" class="form-control span-quantidade">@item.Quantidade</span>
+                            <span class="input-group-btn">
+                                <button type="button" class="quantity-right-plus btn btn-default btn-number btn-sm" data-type="plus" data-field="@item.Produto.ProdutoId">
+                                    <span class="fa fa-plus"></span>
+                                </button>
+                            </span>
+                        </div>
+                    </td>
+                    <td>
+                        @using (Html.BeginForm("Remover", "Carrinho"))
+                        {
+                            @Html.Hidden("ProdutoId", item.Produto.ProdutoId, new { @id = "ProdutoId" + item.Produto.ProdutoId })
+                            @Html.HiddenFor(x => x.ReturnUrl, new { @id = "ReturnUrl" + item.Produto.ProdutoId })
+                            <input class="btn btn-sm btn-warning" type="submit" value="Remover" />
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="2" class="text-right"><strong>Total:</strong></td>
+                <td class="text-right"><strong> @Model.Carrinho.ObterValorTotal().ToString("c")</strong></td>
+                <td colspan="2"></td>
+            </tr>
+        </tfoot>
+    </table>
 
-    
+    <div class="text-center">
 
-    <a class="btn btn-primary" href="@Model.ReturnUrl"><i class="fa fa-cart-plus">&nbsp;</i>Continuar Comprando</a> 
-    
-    <a class="btn btn-danger" href="/Carrinho/FecharPedido"><i class="fa fa-check-square-o">&nbsp;</i>Fechar pedido</a>
-    @*@Html.ActionLink("Fechar pedido", "FecharPedido", "Carrinho", new { @class = "btn btn-primary" })*@
-</div>
+
+
+        <a class="btn btn-primary" href="@Model.ReturnUrl"><i class="fa fa-cart-plus">&nbsp;</i>Continuar Comprando</a>
+
+        <a class="btn btn-danger" href="/Carrinho/FecharPedido"><i class="fa fa-check-square-o">&nbsp;</i>Fechar pedido</a>
+        @*@Html.ActionLink("Fechar pedido", "FecharPedido", "Carrinho", new { @class = "btn btn-primary" })*@
+    </div>
+}
+

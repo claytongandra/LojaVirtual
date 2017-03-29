@@ -1,9 +1,12 @@
-﻿using System.Web.Mvc;
+﻿
+using System.Web.Mvc;
 using System.Linq;
 using Clayton.LojaVirtual.Dominio.Repositorio;
 using Clayton.LojaVirtual.Dominio.Entidade;
 using Clayton.LojaVirtual.Web.Models;
 using System.Configuration;
+using System.Text.RegularExpressions;
+using System.Web;
 
 
 namespace Clayton.LojaVirtual.Web.Controllers
@@ -15,11 +18,18 @@ namespace Clayton.LojaVirtual.Web.Controllers
         // GET: Index
         public ViewResult Index(Carrinho carrinho, string returnUrl)
         {
-                      
+
+            string varReturnUrlLimpa = HttpUtility.UrlDecode(new Regex(@"(?si:(Carrinho\/Index\?returnUrl=(?<Url>[^/]+)))").Match(returnUrl).Groups["Url"].Value);
+
+            if (string.IsNullOrEmpty(varReturnUrlLimpa))
+            {
+                varReturnUrlLimpa = HttpUtility.UrlDecode(returnUrl);
+            }
+
             return View(new CarrinhoViewModel
             {
                 Carrinho = carrinho,
-                ReturnUrl = returnUrl
+                ReturnUrl = varReturnUrlLimpa
             });
         }
 
@@ -75,7 +85,7 @@ namespace Clayton.LojaVirtual.Web.Controllers
 
             if(produto != null)
             {
-                carrinho.AdicionarItem(produto, 1);
+                carrinho.AdicionarItem(produto);
                
             }
 
@@ -83,7 +93,7 @@ namespace Clayton.LojaVirtual.Web.Controllers
         }
 
         // GET: Remover
-        public RedirectToRouteResult Remover(Carrinho carrinho, int produtoId, string returnUrl)
+        public RedirectToRouteResult Remover(Carrinho carrinho, int produtoId, string returnUrl, int quantidade = 0)
         {
              _repositorio = new ProdutosRepositorio();
 
@@ -92,10 +102,21 @@ namespace Clayton.LojaVirtual.Web.Controllers
 
             if (produto != null)
             {
-                carrinho.RemoverItem(produto);
+                carrinho.RemoverItem(produto, quantidade);
             }
 
+            //if (carrinho.ItensCarrinho.Count() <= 0)
+            //{
+            //    return RedirectToRoute(new
+            //    {
+            //        controller = "Vitrine",
+            //        action = "ListaProdutos"
+            //        //categoria = returnUrl.Replace(@"/", "")  
+            //    });
+            //}
+            
             return RedirectToAction("Index", new { returnUrl });
+
         }
 
         // GET: PedidoConcluido

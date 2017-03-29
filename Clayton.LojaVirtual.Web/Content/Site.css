@@ -24,7 +24,6 @@ textarea {
     padding: 1px 15px;
     color: #A0A0A0;
 }
-
 .profile-img {
     width: 96px;
     height: 96px;
@@ -40,3 +39,94 @@ textarea {
     margin-left: auto;
 }
 
+a.deco-none{
+    color:#000;
+    text-decoration:none;
+}
+a.deco-none:hover{
+    color:#999;
+    text-decoration:none;
+}
+
+/*.dropdown-user {
+    right: 0;
+    left: auto;
+    margin-left: auto;
+    width: 260px;
+    min-width: 0px;
+    padding-bottom: 8px;
+}
+.user-menu {
+    margin: 5px 10px 10px 15px;
+    border:1px none #ff0000;
+
+}
+
+.user-name {
+    position: relative;
+     top:25px;
+    margin: 0 0 0 10px;
+    font-size: 15px;
+    float:left;
+    border:1px none #ff0000;
+}
+
+.user-position {
+    font-size: 11px;
+    margin: 0 0 0 10px;
+    position: relative;
+    top:10px;
+    float:left;
+    color: #bbb;
+    border:1px none #4cff00;
+}*/
+
+
+.span-quantidade{
+    min-width:20px;
+    height: 30px;
+    padding: 5px;
+    border:1px solid #ccc;
+}
+
+.badge-notify{
+   background:red;
+   position:absolute;
+   /*top: -12px;
+   left: -15px;*/
+  }
+
+.btn .badge {
+   background:red;
+   position:absolute;
+    top: -3px;
+    right: -7px;
+    background:red;
+    padding: 2px 5px 1px 5px;
+    font-size: 12px;
+}
+
+
+
+#btnnavbarcart{
+    position:relative; 
+    padding: 3px 5px;
+    color:#9d9d9d
+}
+
+#btnnavbarcart:hover, #btnnavbarcart:focus{
+    color:#fff;
+    background-color: transparent;
+}
+
+/*div.cn {
+    width: 100%;
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    border:1px none #ff0000;
+}
+div.inner {
+    display: inline-block;  
+
+}*/
