@@ -22,9 +22,9 @@ namespace Clayton.LojaVirtual.UnitTest
 
             Carrinho carrinho = new Carrinho();
 
-            carrinho.AdicionarItem(produto1, 2);
-            carrinho.AdicionarItem(produto2, 3);
-            carrinho.AdicionarItem(produto3, 3);
+            carrinho.AdicionarItem(produto1);
+            carrinho.AdicionarItem(produto2);
+            carrinho.AdicionarItem(produto3);
 
             //Act
             ItemCarrinho[] itens = carrinho.ItensCarrinho.ToArray();
@@ -48,9 +48,9 @@ namespace Clayton.LojaVirtual.UnitTest
 
             Carrinho carrinho = new Carrinho();
 
-            carrinho.AdicionarItem(produto1, 1);
-            carrinho.AdicionarItem(produto2, 1);
-            carrinho.AdicionarItem(produto1, 10);
+            carrinho.AdicionarItem(produto1);
+            carrinho.AdicionarItem(produto2);
+            carrinho.AdicionarItem(produto1);
 
             //Act
             ItemCarrinho[] resultado = carrinho.ItensCarrinho.OrderBy(c => c.Produto.ProdutoId).ToArray();
@@ -74,13 +74,13 @@ namespace Clayton.LojaVirtual.UnitTest
 
             Carrinho carrinho = new Carrinho();
 
-            carrinho.AdicionarItem(produto1, 1);
-            carrinho.AdicionarItem(produto2, 3);
-            carrinho.AdicionarItem(produto3, 5);
-            carrinho.AdicionarItem(produto2, 1);
+            carrinho.AdicionarItem(produto1);
+            carrinho.AdicionarItem(produto2);
+            carrinho.AdicionarItem(produto3);
+            carrinho.AdicionarItem(produto2);
 
 
-            carrinho.RemoverItem(produto2);
+            carrinho.RemoverItem(produto2, 3);
 
             //Assert
 
@@ -99,9 +99,9 @@ namespace Clayton.LojaVirtual.UnitTest
 
             Carrinho carrinho = new Carrinho();
 
-            carrinho.AdicionarItem(produto1, 1); //100
-            carrinho.AdicionarItem(produto2, 1); //50
-            carrinho.AdicionarItem(produto1, 3); //300 = 450
+            carrinho.AdicionarItem(produto1); //100
+            carrinho.AdicionarItem(produto2); //50
+            carrinho.AdicionarItem(produto1); //300 = 450
 
             decimal resultado = carrinho.ObterValorTotal();
 
@@ -121,8 +121,8 @@ namespace Clayton.LojaVirtual.UnitTest
 
             Carrinho carrinho = new Carrinho();
 
-            carrinho.AdicionarItem(produto1, 1); 
-            carrinho.AdicionarItem(produto2, 1);
+            carrinho.AdicionarItem(produto1); 
+            carrinho.AdicionarItem(produto2);
 
             carrinho.LimparCarrinho();
 

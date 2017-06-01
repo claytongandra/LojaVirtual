@@ -30,9 +30,9 @@ namespace Clayton.LojaVirtual.UnitTest
 
             Carrinho carrinho = new Carrinho();
 
-            carrinho.AdicionarItem(produto1, 3);
+            carrinho.AdicionarItem(produto1);
 
-            carrinho.AdicionarItem(produto2, 4);
+            carrinho.AdicionarItem(produto2);
 
             CarrinhoController controller = new CarrinhoController();
 

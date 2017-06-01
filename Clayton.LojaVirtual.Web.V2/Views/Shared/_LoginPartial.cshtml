@@ -1,0 +1,67 @@
+﻿@if (Request.IsAuthenticated)
+{
+    using (Html.BeginForm("LogOff", "Autenticacao", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    {
+        @Html.AntiForgeryToken()
+    }
+    <div class="nav navbar-nav navbar-right">
+        <div id="ddtopmenubar" class="mattblackmenu">
+            <ul id="top-menu">
+                @*<li><a href="#" id="mu-search-icon"><i class="fa fa-search"></i></a></li>*@
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href='#' id="userLink">
+                        <i class="fa fa-user">&nbsp;</i>Olá @User.Identity.Name &nbsp;<i class="fa fa-angle-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user">
+                        @*<li>
+                                <div class="user-menu">
+                                    @*<a href="#" id="userAvatarMenu" data-toggle="modal" data-target="#modalBootstrap" data-whatever=""><img data-tooltip="true" data-placement="right" title="Alterar imagem de perfil" id="imagemAvatar" class="img-circle" src="@* @_caminhoAvatar* @" width="45" height="45" /></a>* @
+                                    <span class="user-position">Entrou como:</span>
+                                    <span class="user-name">@User.Identity.Name</span>
+                                </div>
+                            </li>*@
+                        @*<li class="divider"></li>
+                            <li>
+                                <a href="@Url.Action("Index", "Manage", new { Area = "" })">
+                                    <i class="fa fa-user-md">&nbsp;&nbsp;</i>Minha Conta
+                                </a>
+                            </li>*@
+                        @*<li>
+                                <a href="@Url.Action(" ChangePassword", "Manage", new { area = "" })" id="alterarSenha" data-toggle="modal" data-target="#modalBootstrap" data-whatever="">
+                                    <i class="fa fa-cogs">&nbsp;&nbsp;</i>Alterar Senha
+                                </a>
+                            </li>*@
+
+                        @*<li class="divider"></li>*@
+                        <li>
+                            <a href="javascript:document.getElementById('logoutForm').submit()">
+                                <i class="fa fa-sign-out">&nbsp;&nbsp;</i>Sair
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a class="dropdown-toggle count-info" data-hover="dropdown" data-toggle="dropdown" href="#" id="settingsLink">
+                        <i class="fa fa-cog">&nbsp;</i>
+                        <i class="fa fa-angle-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user">
+                        <li><a href="@Url.Action("Index", "Produto", new { Area = "Administrativo" })"><i class="fa fa-cogs">&nbsp;</i> Área Administrativa</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+}
+else
+{
+    <div>
+        <div id="ddtopmenubar">
+            <ul id="top-menuadm" class="nav navbar-nav navbar-right">
+                <li><a href="#search"><i class="fa fa-search">&nbsp;</i></a></li>
+                <li><a href="@Url.Action("Index", "Produto", new { Area = "Administrativo" })"><i class="fa fa-cogs">&nbsp;</i>Área Administrativa</a></li>@*Área Administrativa*@
+                @*<li><a href="@Url.Action("Register", "Autenticacao", new { Area = "" })"><i class="fa fa-user-plus">&nbsp;</i>Cadastrar</a></li>*@
+            </ul>
+        </div>
+    </div>
+}

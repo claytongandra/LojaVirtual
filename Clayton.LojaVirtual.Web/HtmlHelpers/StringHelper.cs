@@ -40,5 +40,16 @@ namespace Clayton.LojaVirtual.Web.HtmlHelpers
                 .Where(ch => char.GetUnicodeCategory(ch) != UnicodeCategory.NonSpacingMark)
                 .ToArray());
         }
+
+        public static string UpperCaseFirst(this string title)
+        {
+            // Check for empty string.
+            if (string.IsNullOrEmpty(title))
+            {
+                return string.Empty;
+            }
+            // Return char and concat substring.
+            return char.ToUpper(title[0]) + title.Substring(1);
+        }
     }
 }

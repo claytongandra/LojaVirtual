@@ -38,6 +38,10 @@
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="FastMapper, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FastMapper.1.2.0\lib\net40\FastMapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -49,15 +53,31 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Dto\SubGrupoDto.cs" />
     <Compile Include="Entidade\Administrador.cs" />
     <Compile Include="Entidade\Carrinho.cs" />
+    <Compile Include="Entidade\Categoria.cs" />
     <Compile Include="Entidade\EmailConfiguracoes.cs" />
     <Compile Include="Entidade\EmailProcessarPedido.cs" />
+    <Compile Include="Entidade\FaixaEtaria.cs" />
+    <Compile Include="Entidade\Genero.cs" />
+    <Compile Include="Entidade\Grupo.cs" />
+    <Compile Include="Entidade\Marca.cs" />
+    <Compile Include="Entidade\Modalidade.cs" />
     <Compile Include="Entidade\Pedido.cs" />
     <Compile Include="Entidade\Produto.cs" />
+    <Compile Include="Entidade\SubGrupo.cs" />
+    <Compile Include="Entidade\Vitrine\Clubes.cs" />
+    <Compile Include="Entidade\Vitrine\ClubesInternacionais.cs" />
+    <Compile Include="Entidade\Vitrine\ClubesNacionais.cs" />
+    <Compile Include="Entidade\Vitrine\MarcaVitrine.cs" />
+    <Compile Include="Entidade\Vitrine\ProdutoVitrine.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositorio\AdministradoresRepositorio.cs" />
+    <Compile Include="Repositorio\CategoriaRepositorio.cs" />
     <Compile Include="Repositorio\EfDbContext.cs" />
+    <Compile Include="Repositorio\MenuRepositorio.cs" />
+    <Compile Include="Repositorio\ProdutoModeloRepositorio.cs" />
     <Compile Include="Repositorio\ProdutosRepositorio.cs" />
   </ItemGroup>
   <ItemGroup>
