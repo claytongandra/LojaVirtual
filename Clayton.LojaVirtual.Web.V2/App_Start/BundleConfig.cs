@@ -47,6 +47,12 @@ namespace Clayton.LojaVirtual.Web.V2
                         "~/Content/style.css",
                         "~/Content/site.css"
                         ));
+
+
+            bundles.Add(new ScriptBundle("~/Scripts/detalhesproduto").Include(
+                        "~/Scripts/jquery.elevatezoom.js",
+                        "~/Scripts/detalhesProduto.js"
+                        ));
         }
     }
 }

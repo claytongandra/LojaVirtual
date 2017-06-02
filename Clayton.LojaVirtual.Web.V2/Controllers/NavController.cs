@@ -24,7 +24,7 @@ namespace Clayton.LojaVirtual.Web.V2.Controllers
             return View(_model);
         }
 
-        [Route("nav/{codigo}/{marca}")]
+        [Route("nav/marca/{codigo}/{marca}")]
         public ActionResult ObterProdutosPorMarcas(string codigo, string marca)
         {
 
@@ -60,13 +60,27 @@ namespace Clayton.LojaVirtual.Web.V2.Controllers
         {
 
             _repositorio = new ProdutoModeloRepositorio();
-
             var produtosVitrine = _repositorio.ObterProdutosVitrine(genero: codigo);
-
-
             _model = new ProdutosViewModel { Produtos = produtosVitrine, Titulo = genero };
+            return View("Navegacao", _model);
+        }
 
 
+        [Route("nav/grupo/{codigo}/{grupo}")]
+        public ActionResult ObterProdutosPorGrupo(string codigo, string grupo)
+        {
+            _repositorio = new ProdutoModeloRepositorio();
+            var produtosVitrine = _repositorio.ObterProdutosVitrine(grupo: codigo);
+            _model = new ProdutosViewModel { Produtos = produtosVitrine, Titulo = grupo };
+            return View("Navegacao", _model);
+        }
+
+        [Route("nav/categoria/{codigo}/{categoria}")]
+        public ActionResult ObterProdutosPorCategoria(string codigo, string categoria)
+        {
+            _repositorio = new ProdutoModeloRepositorio();
+            var produtosVitrine = _repositorio.ObterProdutosVitrine(categoria: codigo);
+            _model = new ProdutosViewModel { Produtos = produtosVitrine, Titulo = categoria };
             return View("Navegacao", _model);
         }
 

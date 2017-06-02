@@ -30,6 +30,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=4.1.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.4.1.1\lib\net45\AutoMapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
       <Private>True</Private>
@@ -40,6 +44,14 @@
     </Reference>
     <Reference Include="FastMapper, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\FastMapper.1.2.0\lib\net40\FastMapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.1\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -53,12 +65,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Dto\BreadCrumbDto.cs" />
+    <Compile Include="Dto\DetalhesProdutoDto.cs" />
     <Compile Include="Dto\SubGrupoDto.cs" />
     <Compile Include="Entidade\Administrador.cs" />
     <Compile Include="Entidade\Carrinho.cs" />
     <Compile Include="Entidade\Categoria.cs" />
+    <Compile Include="Entidade\Cliente.cs" />
+    <Compile Include="Entidade\Cor.cs" />
+    <Compile Include="Entidade\DocumentoCliente.cs" />
     <Compile Include="Entidade\EmailConfiguracoes.cs" />
     <Compile Include="Entidade\EmailProcessarPedido.cs" />
+    <Compile Include="Entidade\EnderecoCliente.cs" />
+    <Compile Include="Entidade\Estoque.cs" />
     <Compile Include="Entidade\FaixaEtaria.cs" />
     <Compile Include="Entidade\Genero.cs" />
     <Compile Include="Entidade\Grupo.cs" />
@@ -66,23 +85,38 @@
     <Compile Include="Entidade\Modalidade.cs" />
     <Compile Include="Entidade\Pedido.cs" />
     <Compile Include="Entidade\Produto.cs" />
+    <Compile Include="Entidade\ProdutoDetalhes.cs" />
+    <Compile Include="Entidade\ProdutoModelo.cs" />
     <Compile Include="Entidade\SubGrupo.cs" />
+    <Compile Include="Entidade\Tamanho.cs" />
+    <Compile Include="Entidade\TelefoneCliente.cs" />
     <Compile Include="Entidade\Vitrine\Clubes.cs" />
     <Compile Include="Entidade\Vitrine\ClubesInternacionais.cs" />
     <Compile Include="Entidade\Vitrine\ClubesNacionais.cs" />
     <Compile Include="Entidade\Vitrine\MarcaVitrine.cs" />
     <Compile Include="Entidade\Vitrine\ProdutoVitrine.cs" />
+    <Compile Include="Migrations\201706021735214_CriaClienteDB.cs" />
+    <Compile Include="Migrations\201706021735214_CriaClienteDB.Designer.cs">
+      <DependentUpon>201706021735214_CriaClienteDB.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositorio\AdministradoresRepositorio.cs" />
     <Compile Include="Repositorio\CategoriaRepositorio.cs" />
     <Compile Include="Repositorio\EfDbContext.cs" />
     <Compile Include="Repositorio\MenuRepositorio.cs" />
+    <Compile Include="Repositorio\ProdutoDetalhesRepositorio.cs" />
     <Compile Include="Repositorio\ProdutoModeloRepositorio.cs" />
     <Compile Include="Repositorio\ProdutosRepositorio.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201706021735214_CriaClienteDB.resx">
+      <DependentUpon>201706021735214_CriaClienteDB.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

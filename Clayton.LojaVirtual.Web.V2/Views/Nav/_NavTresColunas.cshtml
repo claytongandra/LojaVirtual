@@ -24,16 +24,28 @@
             <div class="item">
                 <!-- Item image -->
                 <div class="item-image">
-                    <a href="@Url.Action("Detalhes","DetalhesProduto", new {id = @Model.Produtos[i].ProdutoModeloCor, marca = @Model.Produtos[i].MarcaDescricao.ToLower(), produto = @Model.Produtos[i].ProdutoDescricao.ToSeoUrl() })">
-                        <img src="@ImageHelper.CaminhoImagem()/180x180/@Model.Produtos[i].Imagem" alt="@Model.Produtos[i].ProdutoDescricao" class="img-responsive" />
-                    </a>
-                </div>
+                    <a href="@Url.Action("Detalhes", "DetalhesProduto", new
+                        {
+                            codigo = @Model.Produtos[i].ProdutoModeloCor.Substring(0, 6),
+                            marca = @Model.Produtos[i].MarcaDescricao.ToLower(),
+                            produto = @Model.Produtos[i].ProdutoDescricao.ToSeoUrl(),
+                            corCodigo = @Model.Produtos[i].ProdutoModeloCor.Substring(6)
+                        })">
+                            <img src="@ImageHelper.CaminhoImagem()/180x180/@Model.Produtos[i].Imagem" alt="@Model.Produtos[i].ProdutoDescricao" class="img-responsive" />
+                        </a>
+</div>
                 <!-- Item details -->
                 <div class="item-details">
                     <!-- Name -->
                     <h5>
 
-                        <a href="@Url.Action("Detalhes","DetalhesProduto", new {id = @Model.Produtos[i].ProdutoModeloCor, marca = @Model.Produtos[i].MarcaDescricao.ToLower(), produto = @Model.Produtos[i].ProdutoDescricao.ToSeoUrl() })" class="zoom">
+                        <a href="@Url.Action("Detalhes", "DetalhesProduto", new
+                        {
+                            codigo = @Model.Produtos[i].ProdutoModeloCor.Substring(0, 6),
+                            marca = @Model.Produtos[i].MarcaDescricao.ToLower(),
+                            produto = @Model.Produtos[i].ProdutoDescricao.ToSeoUrl(),
+                            corCodigo = @Model.Produtos[i].ProdutoModeloCor.Substring(6)
+                        })">
                             @Model.Produtos[i].ProdutoDescricao
                         </a>
 
