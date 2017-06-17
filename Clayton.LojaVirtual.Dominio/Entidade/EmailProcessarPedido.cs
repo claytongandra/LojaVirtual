@@ -44,9 +44,9 @@ namespace Clayton.LojaVirtual.Dominio.Entidade
 	            {
                     var subtotal = item.Produto.Preco * item.Quantidade;
 
-                    
 
-                    body.AppendFormat("{0} x {1} (subtotal: {2:c})", item.Quantidade, item.Produto.Nome, subtotal);
+
+                    body.AppendFormat("{0} x {1} (subtotal: {2:c})", item.Quantidade, item.Produto.ProdutoDescricao, subtotal);
                     body.AppendLine(".");
                     body.AppendLine("--------------------------------------------");
 	            }
@@ -56,13 +56,13 @@ namespace Clayton.LojaVirtual.Dominio.Entidade
                 body.AppendLine("");
                 body.AppendLine("--------------------------------------------")
                     .AppendLine("Enviar para:")
-                    .AppendLine(pedido.NomeCliente)
-                    .AppendLine(pedido.Email)
-                    .AppendLine(pedido.Endereco ?? "")
-                    .AppendLine(pedido.Complemento ?? "")
-                    .AppendLine(pedido.Bairro ?? "")
-                    .AppendLine(pedido.Cidade ?? "")
-                    .AppendLine(pedido.Estado ?? "")
+                    .AppendLine(pedido.Cliente.NomeCompleto)
+                    .AppendLine(pedido.Cliente.Email)
+                    .AppendLine(pedido.Cliente.Endereco.Rua + ", " + pedido.Cliente.Endereco.Numero ?? "")
+                    .AppendLine(pedido.Cliente.Endereco.Complemento ?? "")
+                    .AppendLine(pedido.Cliente.Endereco.Bairro ?? "")
+                    .AppendLine(pedido.Cliente.Endereco.Cidade ?? "")
+                    .AppendLine(pedido.Cliente.Endereco.Estado ?? "")
                     .AppendLine("--------------------------------------------")
                     .AppendFormat("Para presente?: {0}", pedido.EmbrulhaPresente ? "Sim" : "Não");
 

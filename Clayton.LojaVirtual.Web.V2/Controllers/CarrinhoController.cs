@@ -1,27 +1,28 @@
-﻿
+﻿using System.Web;
 using System.Web.Mvc;
 using System.Linq;
-using Clayton.LojaVirtual.Dominio.Repositorio;
-using Clayton.LojaVirtual.Dominio.Entidade;
-using Clayton.LojaVirtual.Web.Models;
 using System.Configuration;
 using System.Text.RegularExpressions;
-using System.Web;
+using Microsoft.AspNet.Identity;
+using Clayton.LojaVirtual.Dominio.Repositorio;
+using Clayton.LojaVirtual.Dominio.Entidade;
+using Clayton.LojaVirtual.Web.V2.Models;
+using System.Collections.Generic;
 
 
-namespace Clayton.LojaVirtual.Web.Controllers
+namespace Clayton.LojaVirtual.Web.V2.Controllers
 {
     public class CarrinhoController : Controller
     {
         private DetalhesProdutosRepositorio _repositorio = new DetalhesProdutosRepositorio();
-        //private ClientesRepositorio _clientesRepositorio = new ClientesRepositorio();
-        //private PedidosRepositorio _pedidosRepositorio = new PedidosRepositorio();
+        private ClientesRepositorio _clientesRepositorio = new ClientesRepositorio();
+        private PedidosRepositorio _pedidosRepositorio = new PedidosRepositorio();
 
         // GET: Index
         public ViewResult Index(Carrinho carrinho, string returnUrl)
         {
 
-            string varReturnUrlLimpa = HttpUtility.UrlDecode(new Regex(@"(?si:(Carrinho\/Index\?returnUrl=(?<Url>[^/]+)))").Match(returnUrl).Groups["Url"].Value);
+            string varReturnUrlLimpa = ""; //HttpUtility.UrlDecode(new Regex(@"(?si:(Carrinho\/Index\?returnUrl=(?<Url>[^/]+)))").Match(returnUrl).Groups["Url"].Value);
 
             if (string.IsNullOrEmpty(varReturnUrlLimpa))
             {
@@ -42,23 +43,24 @@ namespace Clayton.LojaVirtual.Web.Controllers
         }
 
         // GET: FecharPedido
+        [Authorize]
         public ViewResult FecharPedido()
         {
-            return View(new Pedido());
+            Pedido novoPedido = new Pedido();
+            novoPedido.ClienteId = User.Identity.GetUserId();
+            novoPedido.Cliente = _clientesRepositorio.ObterCliente(User.Identity.GetUserId());
+
+
+            return View(novoPedido);
         }
 
         // Post: FecharPedido
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
-        public ViewResult FecharPedido(Carrinho carrinho, Pedido pedido)
+        public ActionResult FecharPedido(Carrinho carrinho, Pedido pedido)
         {
-            EmailConfiguracoes email = new EmailConfiguracoes
-            {
-       //         EscreverArquivo = bool.Parse(ConfigurationManager.AppSettings["Email.EscreverArquivo"] ?? "false")
-            };
-
-            EmailPedido emailPedido = new EmailPedido(email);
-
+           
             if (!carrinho.ItensCarrinho.Any())
             {
                 ModelState.AddModelError("", "Não foi possível concluir o pedido, seu carrinho está vazio!");
@@ -66,9 +68,19 @@ namespace Clayton.LojaVirtual.Web.Controllers
 
             if (ModelState.IsValid)
             {
-                emailPedido.ProcessarPedido(carrinho, pedido);
-                carrinho.LimparCarrinho();
-                return View("PedidoConcluido");
+                pedido.ProdutosPedido = new List<ProdutoPedido>();
+                foreach (var item in carrinho.ItensCarrinho)
+                {
+                    pedido.ProdutosPedido.Add(new ProdutoPedido()
+                    {
+                        Quantidade = item.Quantidade,
+                        ProdutoId = item.Produto.ProdutoId
+                    });
+                }
+                pedido.Pago = false;
+                pedido = _pedidosRepositorio.SalvarPedido(pedido);
+
+                return RedirectToAction("PedidoConcluido", new { pedidoId = pedido.Id });
             }
             else
             {
@@ -77,45 +89,29 @@ namespace Clayton.LojaVirtual.Web.Controllers
 
         }
 
-        // GET: Adicionar
-        //////public RedirectToRouteResult Adicionar(Carrinho carrinho, int produtoId, string returnUrl)
-        //////{
-        //////    _repositorio = new ProdutosRepositorio();
-
-        //////    Produto produto = _repositorio.Produtos
-        //////        .FirstOrDefault(p => p.ProdutoId == produtoId);
-
-        //////    if(produto != null)
-        //////    {
-        //////        carrinho.AdicionarItem(produto);
-               
-        //////    }
-
-        //////    return RedirectToAction("Index", new { returnUrl });
-        //////}
-
-        public RedirectToRouteResult Adicionar(Carrinho carrinho, int quantidade,
-    string produto, string Cor, string Tamanho, string returnUrl)
+        // GET: Adicionar //int produtoId
+        public RedirectToRouteResult Adicionar(Carrinho carrinho, string produto, string Cor, string Tamanho, string returnUrl)
         {
-            ProdutoDetalhes prod = _repositorio.ObterProduto(produto, Cor, Tamanho);
 
-            if (prod != null)
+
+            ProdutoDetalhes prod =  _repositorio.ObterProduto(produto, Cor, Tamanho);
+              
+
+            if(prod != null)
             {
                 carrinho.AdicionarItem(prod);
-
+               
             }
 
             return RedirectToAction("Index", "Nav");
-
         }
-
 
         // GET: Remover
         public RedirectToRouteResult Remover(Carrinho carrinho, int produtoId, string returnUrl, int quantidade = 0)
         {
-           
+            
 
-            ProdutoDetalhes produto = _repositorio.Produtos
+             ProdutoDetalhes produto = _repositorio.Produtos
                 .FirstOrDefault(p => p.ProdutoId == produtoId);
 
             if (produto != null)
@@ -132,15 +128,27 @@ namespace Clayton.LojaVirtual.Web.Controllers
             //        //categoria = returnUrl.Replace(@"/", "")  
             //    });
             //}
-            
+
             return RedirectToAction("Index", "Nav");
 
         }
 
         // GET: PedidoConcluido
-        public ViewResult PedidoConcluido()
+        public ViewResult PedidoConcluido(Carrinho carrinho, int pedidoId)
         {
-            return View();
+            EmailConfiguracoes email = new EmailConfiguracoes
+            {
+    //            EscreverArquivo = bool.Parse(ConfigurationManager.AppSettings["Email.EscreverArquivo"] ?? "false")
+            };
+
+            EmailPedido emailPedido = new EmailPedido(email);
+
+            var pedido = _pedidosRepositorio.ObterPedido(pedidoId);
+
+            emailPedido.ProcessarPedido(carrinho, pedido);
+            carrinho.LimparCarrinho();
+
+            return View(pedido);
         }
 
         //private Carrinho ObterCarrinho()

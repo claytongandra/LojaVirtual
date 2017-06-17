@@ -1,4 +1,4 @@
-﻿
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Clayton.LojaVirtual.Dominio.Entidade
@@ -34,5 +34,7 @@ namespace Clayton.LojaVirtual.Dominio.Entidade
             get { return ProdutoCodigo.Substring(0, 8) + ".jpg"; }
 
         }
+
+        public virtual ICollection<ProdutoPedido> ProdutosPedido { get; set; }
     }
 }

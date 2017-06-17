@@ -161,25 +161,32 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Controllers\CarrinhoController.cs" />
     <Compile Include="Controllers\CategoriaController.cs" />
     <Compile Include="Controllers\ClienteController.cs" />
     <Compile Include="Controllers\DetalhesProdutosController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MenuController.cs" />
     <Compile Include="Controllers\NavController.cs" />
+    <Compile Include="Controllers\PedidosController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\ImageHelper.cs" />
     <Compile Include="HtmlHelpers\StringHelper.cs" />
+    <Compile Include="Infraestrutura\CarrinhoModelBinder.cs" />
+    <Compile Include="Infraestrutura\DecimalModelBinder.cs" />
+    <Compile Include="Models\CarrinhoViewModel.cs" />
     <Compile Include="Models\CategoriaSubGruposViewModel.cs" />
     <Compile Include="Models\ClaytSportSignInManager.cs" />
     <Compile Include="Models\ClaytSportUserManager.cs" />
     <Compile Include="Models\DetalhesProdutoViewModel.cs" />
+    <Compile Include="Models\LoginViewModel.cs" />
     <Compile Include="Models\ModalidadeSubGrupoViewModel.cs" />
     <Compile Include="Models\ProdutosViewModel.cs" />
     <Compile Include="Models\SubGrupoCategoriasViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\animate.min.css" />
@@ -321,6 +328,15 @@
     <Content Include="Views\Shared\TelefoneCliente.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\EnderecoCliente.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\TelefoneCliente.cshtml" />
+    <Content Include="Views\Cliente\Login.cshtml" />
+    <Content Include="Views\Carrinho\FecharPedido.cshtml" />
+    <Content Include="Views\Carrinho\Index.cshtml" />
+    <Content Include="Views\Carrinho\PedidoConcluido.cshtml" />
+    <Content Include="Views\Carrinho\Resumo.cshtml" />
+    <Content Include="Views\Pedidos\Index.cshtml" />
+    <Content Include="Views\Pedidos\Details.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\EnderecoCliente.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\ProdutosPedidoList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

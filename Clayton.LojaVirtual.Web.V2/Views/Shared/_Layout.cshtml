@@ -32,70 +32,54 @@
     <!-- Shopping cart Modal -->
     <div class="modal fade" id="shoppingcart" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">Shopping Cart</h4>
-                </div>
-                <div class="modal-body">
+            <div class="modal-content" data-url="@Url.Action("Index", "Carrinho")">
 
-                    <!-- Items table -->
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Quantity</th>
-                                <th>Price</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><a href="single-item.html">HTC One</a></td>
-                                <td>2</td>
-                                <td>$250</td>
-                            </tr>
-                            <tr>
-                                <td><a href="single-item.html">Apple iPhone</a></td>
-                                <td>1</td>
-                                <td>$502</td>
-                            </tr>
-                            <tr>
-                                <td><a href="single-item.html">Galaxy Note</a></td>
-                                <td>4</td>
-                                <td>$1303</td>
-                            </tr>
-                            <tr>
-                                <th></th>
-                                <th>Total</th>
-                                <th>$2405</th>
-                            </tr>
-                        </tbody>
-                    </table>
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Continue Shopping</button>
-                    <button type="button" class="btn btn-info">Checkout</button>
-                </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
     <!-- Logo & Navigation starts -->
 
+
+    @*<div class="col-md-10 col-sm-10">
+        <div class="kart-links">
+            @if (Request.IsAuthenticated)
+            {
+                <a href="@Url.Action("Login", "Cliente")">Seja bem-vindo(a) @User.Identity.GetUserName()! </a>
+
+                using (Html.BeginForm("Logoff", "Cliente", FormMethod.Post, new { id = "logoff-form", style = "display: inline;" }))
+                {
+                    <a href="javascript:document.getElementById('logoff-form').submit()">Logoff</a>
+                }
+            }
+            else
+            {
+                <a href="@Url.Action("Login", "Cliente")">Seja bem-vindo(a)! Faça seu login </a>
+            }
+            <a href="@Url.Action("CriaCliente", "Cliente")">Meu cadastro</a>
+            <a href="@Url.Action("Index", "Pedidos")">Meus pedidos</a>
+            <a id="cartMenu" data-toggle="modal" href="#shoppingcart"
+               data-url="@Url.Action("Resumo", "Carrinho")">
+
+            </a>
+        </div>
+    </div>*@
+
+
+
     <div class="header">
-        <div class="container">
+        <div class="">
             <div class="row">
-                <div class="col-md-1 col-sm-1">
+                <div class="col-md-2 col-sm-2">
                     <!-- Logo -->
                     <div class="logo">
                         <h1> <a href="@Url.Action("Index", "Nav")">ClaytSport</a></h1>
                     </div>
                 </div>
-                <div class="col-md-8 col-sm-9">
+                <div class="col-md-6 col-sm-7">
                     @Html.Partial("_Menu")
                 </div>
 
-                <div class="col-md-3 col-sm-2">
+                <div class="col-md-4 col-sm-2">
 
 
                     @Html.Partial("_LoginPartial")
@@ -107,6 +91,7 @@
                         <a href="register.html">Meus pedidos</a>
                         <a data-toggle="modal" href="#shoppingcart"><i class="fa fa-shopping-cart"></i> 3 itens - R$ 300,00</a>
                     </div>*@
+                   
                 </div>
 
                 </div>
@@ -144,20 +129,15 @@
             @RenderBody()
         </div>
     </div>
-    
     <!-- Footer starts -->
     <footer>
         <div class="container">
-
             <div class="row">
-
                 <div class="col-md-4 col-sm-4">
                     <div class="fwidget">
-
                         <h4>Oslon de<span class="color">'</span> Techno</h4>
                         <hr />
                         <p>Duis leo risus, vehicula luctus nunc.  Quiue rhoncus, a sodales enim arcu quis turpis. Duis leo risus, condimentum ut posuere ac, vehicula luctus nunc.  Quisque rhoncus, a sodales enim arcu quis turpis.</p>
-
                         <div class="social">
                             <a href="#" class="facebook"><i class="fa fa-facebook"></i></a>
                             <a href="#" class="twitter"><i class="fa fa-twitter"></i></a>
@@ -167,7 +147,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="col-md-4 col-sm-4">
                     <div class="fwidget">
                         <h4>Categories</h4>
@@ -181,12 +160,8 @@
                         </ul>
                     </div>
                 </div>
-
-
-
                 <div class="col-md-4 col-sm-4">
                     <div class="fwidget">
-
                         <h4>Get In Touch</h4>
                         <hr />
                         <div class="address">
@@ -196,16 +171,10 @@
                             <p><i class="fa fa-phone color contact-icon"></i> +94-948-323-5532</p>
                             <p><i class="fa fa-envelope color contact-icon"></i> <a href="mailto:something@gmail.com">some.thing@gmail.com</a></p>
                         </div>
-
                     </div>
                 </div>
-
             </div>
-
-
-
             <hr />
-
             <div class="copy text-center">
                 Copyright 2013 &copy; - <a href="http://responsivewebinc.com/bootstrap-themes">Bootstrap Themes</a>
             </div>
@@ -222,13 +191,9 @@
         {
             <input type="search" id="termo" name="termo" placeholder="Informe sua busca aqui!" autocomplete="off" />
             <button type="submit" class="btn btn-success">Consultar</button>
-
         }
-
     </div>
-
-
-
+    
     <!-- Javascript files -->
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
@@ -236,5 +201,21 @@
     @*@Scripts.Render("~/Scripts/jsprojetos")*@
 
     @RenderSection("scripts", required: false)
+
+    <script>
+        $(document).ready(function () {
+            loadCart();
+        });
+
+        function loadCart() {
+            var cartFromMenu = $("#btnnavbarcart");
+            var url = cartFromMenu.data("url");
+            cartFromMenu.load(url);
+
+            var modalElement = $("#shoppingcart").find(".modal-content");
+            var url = modalElement.data("url");
+            modalElement.load(url);
+        }
+    </script>
 </body>
 </html>

@@ -13,7 +13,7 @@ namespace Clayton.LojaVirtual.Dominio.Entidade
 
         public string Usuario = "clayton";
 
-        public bool EscreverArquivo  = false;
+        public bool EscreverArquivo  = true;
 
         public string PastaArquivo = @"C:\Exercicios DevMedia\03 - Série Programação .net Web\01 - Curso de ASP.NET MVC - Criando Loja Virtual\Clayton.LojaVirtual\www.EmailPedidosEnviados";
 

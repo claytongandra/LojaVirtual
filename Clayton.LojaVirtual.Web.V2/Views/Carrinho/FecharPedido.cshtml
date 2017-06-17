@@ -1,0 +1,93 @@
+﻿@model Clayton.LojaVirtual.Dominio.Entidade.Pedido
+
+@{
+    ViewBag.Title = "Fechar o pedido";
+}
+
+<h3>Fechar o pedido</h3>
+
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.ClienteId)
+
+    <div class="form-horizontal">
+        <h4>Pedido</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        
+        <h4>Enviar para</h4>
+
+        <div class="form-group">
+            <label>Nome do cliente:</label>
+            @Html.TextBoxFor(x => x.Cliente.NomeCompleto, new { @class = "form-control", disabled = true })
+        </div>
+
+        <h3>Dados para entrega</h3>
+
+        @Html.DisplayFor(m => m.Cliente.Endereco)
+
+        @*<h4>Opções</h4>*@
+
+        <div class="form-group">
+            <div class="col-md-offset-3 col-md-7">
+                <div class="checkbox">
+                    <label>
+                        @Html.EditorFor(model => model.EmbrulhaPresente) Embrulhar para presente
+                    </label>
+                    @Html.ValidationMessageFor(model => model.EmbrulhaPresente, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-3 col-md-9">
+                <input type="submit" value="Fechar o pedido" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+    
+    <hr />
+    @*foreach (var property in ViewData.ModelMetadata.Properties)
+    {
+        
+        <div class="form-group">
+            <label>
+                @(property.DisplayName ?? property.PropertyName)
+            </label>
+        </div>
+    }*@
+}
+
+@*<script src="~/Scripts/jquery-1.10.2.min.js"></script>*@
+
+
+@section Scripts {
+@*<script>
+
+    $(document).ready(function () {
+        $("#Cep").change(function (e) {
+            e.preventDefault();
+
+            var vjsCep = $("#Cep").val().replace('-', '');
+
+            $("#Endereco").val('');
+            $("#Bairro").val('');
+            $("#Cidade").val('');
+            $("#Estado").val('');
+
+            $.getJSON("http://cep.republicavirtual.com.br/web_cep.php?cep=" + vjsCep + "&formato=json", {}, function (data) {
+                if (data.resultado_txt == "sucesso - cep completo") {
+                    $("#Endereco").val(data.tipo_logradouro + ' ' + data.logradouro);
+                    $("#Bairro").val(data.bairro);
+                    $("#Cidade").val(data.cidade);
+                    $("#Estado").val(data.uf);
+                }
+            });
+        });
+    });
+</script>*@
+
+}
+

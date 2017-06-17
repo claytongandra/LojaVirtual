@@ -3,6 +3,8 @@ using System.Data.Entity.ModelConfiguration.Conventions;
 using Clayton.LojaVirtual.Dominio.Entidade;
 using Clayton.LojaVirtual.Dominio.Entidade.Vitrine;
 using Microsoft.AspNet.Identity.EntityFramework;
+using System.Data.Entity.Validation;
+using System;
 
 
 namespace Clayton.LojaVirtual.Dominio.Repositorio
@@ -36,6 +38,9 @@ namespace Clayton.LojaVirtual.Dominio.Repositorio
         public DbSet<Estoque> Estoque { get; set; }
         public DbSet<ProdutoModelo> ProdutoModelo { get; set; }
 
+        public DbSet<Pedido> Pedidos { get; set; }
+        public DbSet<ProdutoPedido> ProdutosPedido { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
@@ -43,6 +48,28 @@ namespace Clayton.LojaVirtual.Dominio.Repositorio
             modelBuilder.Entity<Administrador>().ToTable("Administradores");
 
             base.OnModelCreating(modelBuilder);
+        }
+
+        public override int SaveChanges()
+        {
+            try
+            {
+                return base.SaveChanges();
+            }
+            catch (DbEntityValidationException e)
+            {
+                foreach (var eve in e.EntityValidationErrors)
+                {
+                    Console.WriteLine("Entidade do tipo \"{0}\" no estado \"{1}\" tem os seguintes erros de validação:",
+                        eve.Entry.Entity.GetType().Name, eve.Entry.State);
+                    foreach (var ve in eve.ValidationErrors)
+                    {
+                        Console.WriteLine("- Property: \"{0}\", Erro: \"{1}\"",
+                            ve.PropertyName, ve.ErrorMessage);
+                    }
+                }
+                throw;
+            }
         }
     }
 }

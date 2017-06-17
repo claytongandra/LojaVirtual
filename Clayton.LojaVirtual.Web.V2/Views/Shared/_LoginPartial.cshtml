@@ -1,12 +1,13 @@
 ﻿@if (Request.IsAuthenticated)
 {
-    using (Html.BeginForm("LogOff", "Autenticacao", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    using (Html.BeginForm("LogOff", "Cliente", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
     {
         @Html.AntiForgeryToken()
     }
     <div class="nav navbar-nav navbar-right">
         <div id="ddtopmenubar" class="mattblackmenu">
             <ul id="top-menu">
+                @Html.Action("Resumo", "Carrinho")
                 @*<li><a href="#" id="mu-search-icon"><i class="fa fa-search"></i></a></li>*@
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href='#' id="userLink">
@@ -26,13 +27,13 @@
                                     <i class="fa fa-user-md">&nbsp;&nbsp;</i>Minha Conta
                                 </a>
                             </li>*@
-                        @*<li>
-                                <a href="@Url.Action(" ChangePassword", "Manage", new { area = "" })" id="alterarSenha" data-toggle="modal" data-target="#modalBootstrap" data-whatever="">
-                                    <i class="fa fa-cogs">&nbsp;&nbsp;</i>Alterar Senha
+                      <li>
+                                <a href="@Url.Action("Index", "Pedidos", new { area = "" })">
+                                    <i class="fa fa-cogs">&nbsp;&nbsp;</i>Meus Pedidos
                                 </a>
-                            </li>*@
+                            </li>
 
-                        @*<li class="divider"></li>*@
+                        <li class="divider"></li>
                         <li>
                             <a href="javascript:document.getElementById('logoutForm').submit()">
                                 <i class="fa fa-sign-out">&nbsp;&nbsp;</i>Sair
@@ -59,8 +60,10 @@ else
         <div id="ddtopmenubar">
             <ul id="top-menuadm" class="nav navbar-nav navbar-right">
                 <li><a href="#search"><i class="fa fa-search">&nbsp;</i></a></li>
-                <li><a href="@Url.Action("Index", "Produto", new { Area = "Administrativo" })"><i class="fa fa-cogs">&nbsp;</i>Área Administrativa</a></li>@*Área Administrativa*@
-                @*<li><a href="@Url.Action("Register", "Autenticacao", new { Area = "" })"><i class="fa fa-user-plus">&nbsp;</i>Cadastrar</a></li>*@
+                @Html.Action("Resumo", "Carrinho")
+                <li><a href="@Url.Action("Login", "Cliente", new { Area = "" })"><i class="fa fa-user-plus">&nbsp;</i>Entrar</a></li>
+               @* <li><a href="@Url.Action("Index", "Produto", new { Area = "Administrativo" })"><i class="fa fa-cogs">&nbsp;</i>Área Administrativa</a></li>Área Administrativa*@
+               <li><a href="@Url.Action("CriaCliente", "Cliente", new { Area = "" })"><i class="fa fa-user-plus">&nbsp;</i>Cadastrar</a></li>
             </ul>
         </div>
     </div>

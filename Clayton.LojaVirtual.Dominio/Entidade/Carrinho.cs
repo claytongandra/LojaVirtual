@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 namespace Clayton.LojaVirtual.Dominio.Entidade
 {
-    public class Carrinho
+    public class Carrinho //ProdutoDetalhes
     {
         private readonly List<ItemCarrinho> _itensCarrinho = new List<ItemCarrinho>();
         //Adicionar
-        public void AdicionarItem(Produto produto)
+        public void AdicionarItem(ProdutoDetalhes produto)
         {
             ItemCarrinho item = _itensCarrinho.FirstOrDefault(p => p.Produto.ProdutoId == produto.ProdutoId);
 
@@ -26,7 +26,7 @@ namespace Clayton.LojaVirtual.Dominio.Entidade
         }
 
         //Remover
-        public void RemoverItem(Produto produto, int quantidade)
+        public void RemoverItem(ProdutoDetalhes produto, int quantidade)
         {
             if (quantidade >= 1)
             {
@@ -62,7 +62,7 @@ namespace Clayton.LojaVirtual.Dominio.Entidade
 
     public class ItemCarrinho
     {
-        public Produto Produto { get; set; }
+        public ProdutoDetalhes Produto { get; set; }
         public int Quantidade { get; set; }
     }
 }

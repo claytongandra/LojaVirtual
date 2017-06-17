@@ -1,0 +1,55 @@
+﻿@model Clayton.LojaVirtual.Dominio.Entidade.Carrinho
+@using System.Text.RegularExpressions;
+
+@if (Model.ItensCarrinho.Count() > 0)
+{
+
+    string varUrlAndQuery = Request.Url.PathAndQuery;
+    string varReturnUrlLimpa = HttpUtility.UrlDecode(new Regex(@"(?si:\?returnUrl=([^/]+(returnUrl%3D(?<Url>[^/]+))))|(Carrinho\/Index\?returnUrl=(?<Url>[^/]+))").Match(varUrlAndQuery).Groups["Url"].Value);
+
+    if (string.IsNullOrEmpty(varReturnUrlLimpa))
+    {
+        varReturnUrlLimpa = HttpUtility.UrlDecode(Request.Url.PathAndQuery);
+    }
+
+
+    @*<div class="navbar-right" style="margin-right:10px;">*@
+    <li>
+        <a class="btn navbar-btn" id="btnnavbarcart" data-toggle="modal" href="#shoppingcart" data-url="@Url.Action("Resumo", "Carrinho")">
+            <i class=" fa fa-shopping-cart" style="font-size:25px;"></i>
+            <span class="badge badge-notify">@Model.ItensCarrinho.Count()</span>
+        </a>
+    </li>
+
+    @*<li>
+       
+            <i class="fa fa-shopping-cart"></i>
+            @Model.ItensCarrinho.Sum(x => x.Quantidade) item(s),
+            @Model.ObterValorTotal().ToString("c")
+
+    </li>*@
+
+
+    @*</div>*@
+
+
+    @*<div class="navbar-right">
+        @Html.ActionLink("Checkout", "Index", "Carrinho", new { returnUrl = varReturnUrlLimpa }, new { @class = "btn btn-default navbar-btn" });
+    </div>
+    <div class="navbar-text navbar-right">
+        <strong>Seus produtos:</strong>
+        @Model.ItensCarrinho.Sum(x => x.Quantidade) Item(s), @Model.ObterValorTotal().ToString("c") &nbsp;
+    </div>*@
+
+}
+else
+{
+    @*<div class="navbar-right" style="margin-right:10px;">*@
+    <li>
+        <a class="btn navbar-btn disabled" id="btnnavbarcart" data-toggle="modal" href="#shoppingcart">
+            <i class="fa fa-shopping-cart" style="font-size:25px;"></i>
+            <span class="badge badge-notify">@Model.ItensCarrinho.Count()</span>
+        </a>
+    </li>
+                @*</div>*@
+}

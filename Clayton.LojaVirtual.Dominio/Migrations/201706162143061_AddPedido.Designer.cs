@@ -7,13 +7,13 @@ namespace Clayton.LojaVirtual.Dominio.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class CriaClienteDB : IMigrationMetadata
+    public sealed partial class AddPedido : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(CriaClienteDB));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(AddPedido));
         
         string IMigrationMetadata.Id
         {
-            get { return "201706021735214_CriaClienteDB"; }
+            get { return "201706162143061_AddPedido"; }
         }
         
         string IMigrationMetadata.Source
