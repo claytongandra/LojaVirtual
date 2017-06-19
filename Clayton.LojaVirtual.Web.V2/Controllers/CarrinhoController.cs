@@ -8,6 +8,11 @@ using Clayton.LojaVirtual.Dominio.Repositorio;
 using Clayton.LojaVirtual.Dominio.Entidade;
 using Clayton.LojaVirtual.Web.V2.Models;
 using System.Collections.Generic;
+using System.Net.Http;
+using Clayton.LojaVirtual.Dominio.Entidade.Pagamento;
+using System.Xml.Serialization;
+using System.IO;
+using System.Xml;
 
 
 namespace Clayton.LojaVirtual.Web.V2.Controllers
@@ -58,7 +63,7 @@ namespace Clayton.LojaVirtual.Web.V2.Controllers
         [HttpPost]
         [Authorize]
         [ValidateAntiForgeryToken]
-        public ActionResult FecharPedido(Carrinho carrinho, Pedido pedido)
+        public async System.Threading.Tasks.Task<ActionResult> FecharPedido(Carrinho carrinho, Pedido pedido)
         {
            
             if (!carrinho.ItensCarrinho.Any())
@@ -79,6 +84,55 @@ namespace Clayton.LojaVirtual.Web.V2.Controllers
                 }
                 pedido.Pago = false;
                 pedido = _pedidosRepositorio.SalvarPedido(pedido);
+                pedido.Cliente = _clientesRepositorio.ObterCliente(pedido.ClienteId);
+                foreach (var produto in pedido.ProdutosPedido)
+                {
+                    produto.Produto = _repositorio.Produtos
+                        .Where(p => p.ProdutoId == produto.ProdutoId)
+                        .FirstOrDefault();
+                }
+
+                using (var client = new HttpClient())
+                {
+                    client.BaseAddress = new System.Uri("https://ws.sandbox.pagseguro.uol.com.br");
+                    client.DefaultRequestHeaders.Clear();
+
+                    var pedidoPagSeguro = new PagamentoPagSeguro(
+                       pedido,
+                       "http://localhost:2686/Carrinho/PedidoConcluido?pedidoId=" + pedido.Id,
+                       Request.UserHostAddress);
+                    XmlSerializer serializer = new XmlSerializer(typeof(PagamentoPagSeguro));
+
+                    StreamContent content;
+
+                    using (var stream = new MemoryStream())
+                    {
+                        using (XmlWriter textWriter = XmlWriter.Create(stream))
+                        {
+                            serializer.Serialize(textWriter, pedidoPagSeguro);
+                        }
+
+                        stream.Seek(0, SeekOrigin.Begin);
+                        content = new StreamContent(stream);
+                        var test = await content.ReadAsStringAsync();
+
+                        content.Headers.Add("Content-Type", "application/xml");
+
+                        var response = await client.PostAsync(
+                            "v2/checkouts-qrcode/?email=gandra_cp@yahoo.com.br&token=0836A26ED0EE4265A4612CDEC07A8F08",
+                            content);
+                        if (response.IsSuccessStatusCode)
+                        {
+                            string resultContent = await response.Content.ReadAsStringAsync();
+                            XmlSerializer returnSerializer = new XmlSerializer(typeof(ReceivedPagSeguro));
+                            using (TextReader reader = new StringReader(resultContent))
+                            {
+                                var retorno = (ReceivedPagSeguro)returnSerializer.Deserialize(reader);
+                                return Redirect("https://sandbox.pagseguro.uol.com.br/v2/checkout/payment.html?code=" + retorno.Code);
+                            }
+                        }
+                    }
+                }
 
                 return RedirectToAction("PedidoConcluido", new { pedidoId = pedido.Id });
             }
@@ -144,6 +198,8 @@ namespace Clayton.LojaVirtual.Web.V2.Controllers
             EmailPedido emailPedido = new EmailPedido(email);
 
             var pedido = _pedidosRepositorio.ObterPedido(pedidoId);
+            pedido.Pago = true;
+         //   _pedidosRepositorio.SalvarPedido(pedido);
 
             emailPedido.ProcessarPedido(carrinho, pedido);
             carrinho.LimparCarrinho();

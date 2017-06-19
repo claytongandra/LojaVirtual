@@ -201,7 +201,7 @@ app.ObterEsportes = function () {
 
 
 app.ObterMarcas = function () {
-
+    
     $.getJSON('/menu/obtermarcas', function (data) {
 
         //var vjsHtml = "";
@@ -250,8 +250,8 @@ app.ObterMarcas = function () {
 
         //});
 
-        vjsHtml = fnGerarColunasMenu(data, 6, "Marcas", "/nav/");
-
+        vjsHtml = fnGerarColunasMenu(data, 6, "Marcas", "/nav/marca/");
+      // alert(vjsHtml);
         $(".marcas").append(vjsHtml);
     });
 

@@ -83,6 +83,15 @@
     <Compile Include="Entidade\Grupo.cs" />
     <Compile Include="Entidade\Marca.cs" />
     <Compile Include="Entidade\Modalidade.cs" />
+    <Compile Include="Entidade\Pagamento\ReceivedPagSeguro.cs" />
+    <Compile Include="Entidade\Pagamento\ItemPagSeguro.cs" />
+    <Compile Include="Entidade\Pagamento\PagamentoPagSeguro.cs" />
+    <Compile Include="Entidade\Pagamento\ReceiverPagSeguro.cs" />
+    <Compile Include="Entidade\Pagamento\SenderDocumentPagSeguro.cs" />
+    <Compile Include="Entidade\Pagamento\SenderPagSeguro.cs" />
+    <Compile Include="Entidade\Pagamento\SenderPhonePagSeguro.cs" />
+    <Compile Include="Entidade\Pagamento\ShippingAddressPagSeguro.cs" />
+    <Compile Include="Entidade\Pagamento\ShippingPagSeguro.cs" />
     <Compile Include="Entidade\Pedido.cs" />
     <Compile Include="Entidade\Produto.cs" />
     <Compile Include="Entidade\ProdutoDetalhes.cs" />

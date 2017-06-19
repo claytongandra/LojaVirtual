@@ -38,7 +38,7 @@ namespace Clayton.LojaVirtual.Dominio.Repositorio
                 query = query.Where(p => p.LinhaCodigo == linha);
 
             if (!string.IsNullOrEmpty(marca))
-                query = query.Where(p => p.MarcaCodigo == marca);
+                query = query.Where(p => p.MarcaCodigo == marca).Distinct();
 
             if (!string.IsNullOrEmpty(modalidade))
                 query = query.Where(p => p.ModalidadeCodigo == modalidade);
